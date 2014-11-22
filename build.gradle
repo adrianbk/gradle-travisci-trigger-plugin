@@ -1,0 +1,40 @@
+apply plugin: 'groovy'
+apply plugin: "jacoco"
+apply plugin: 'project-report'
+
+repositories {
+  jcenter()
+}
+
+sourceSets {
+  integrationTest {
+    groovy.srcDir file('src/integTest/groovy')
+    resources.srcDir file('src/integTest/resources')
+    compileClasspath = sourceSets.main.output + sourceSets.test.output + configurations.testRuntime
+    runtimeClasspath = output + compileClasspath
+  }
+}
+
+dependencies {
+  compile localGroovy()
+  compile gradleApi()
+  compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1@jar'
+
+  testCompile("org.spockframework:spock-core:0.7-groovy-2.0") {
+    exclude module: 'groovy-all'
+  }
+  testCompile 'cglib:cglib-nodep:3.1'
+}
+
+task integrationTest(type: Test) {
+  description = 'Runs the integration tests.'
+  group = 'verification'
+  testClassesDir = sourceSets.integrationTest.output.classesDir
+  classpath = sourceSets.integrationTest.runtimeClasspath
+  reports.getHtml().destination = file("$test.reports.html.destination/integTest")
+  reports.getJunitXml().destination = file("$test.reports.junitXml.destination/integTest")
+  mustRunAfter test
+}
+
+check.dependsOn integrationTest
+check.dependsOn jacocoTestReport
