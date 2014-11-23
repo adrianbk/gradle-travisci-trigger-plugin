@@ -25,13 +25,12 @@ travis encrypt TRIGGER_GIT_HUB_API_KEY=<git-hub-api-key> --add
 ## Gradle Configuration
 ```groovy
 tciTrigger {
-  baseUri 'https://api.travis-ci.org/'
   gitHubRepo '<your_github_id>/<github_repo_name>' //Target downstream repository
   travisVariable {
     name = "LATEST_PROJECT_VERSION"
-    value = "${version}" //Parent projects software version
+    value = "${version}" //e.g. Parent projects software version
   }
-travisVariable {
+  travisVariable {
     name = "SAMPELE_VARIABLE_2"
     value = 'SAMPLE_VALUE_2'
   }
@@ -45,15 +44,6 @@ This plugin adds a single task 'travisciTrigger'
 
 ```
 The task will add or update, as appropriate, any configured `travisVariable's` on the target build before executing that target build.
-
-## tciTrigger Configuration
-
-| Name  | Description   | Required |
-|---|---|---|
-|  baseUri | Base uri for the Travis CI API. Defaults to `https://api.travis-ci.org/`   | false |
-|  gitHubApiKeyVarName | The name of the secure environment variable containing the api key `TRIGGER_GIT_HUB_API_KEY`   | false |
-|  gitHubRepo | The GitHub repo slug of the target repo   | true |
-|  travisVariable |  one or more environment variables to set: {name = "T_GRADLE_HOME" value = '/opt/gradle2' visible = true} | false |
 
 ### License
 [Apache-2.0] (http://www.apache.org/licenses/LICENSE-2.0.html)
