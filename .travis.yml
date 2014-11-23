@@ -1,4 +1,6 @@
 language: java
-
 script:
 - TERM=dumb ./gradlew clean check -i --stacktrace
+env:
+  global:
+    secure: nrrxBiZ7yiOk9TMd9B0cUsSVR3BjcxfHvyHkxyF0szqcDfMNip6VQvzPL0FzF/vdzfjgFozOqxhTNZoJdSIVjDRPL6PZJJusPoeVpe3BCL1j/exxV+qDTZIuhu68VsZhHqqgCMCbXXt82f70VURnFaR2gM0wyz79JTATtI//OP4=
