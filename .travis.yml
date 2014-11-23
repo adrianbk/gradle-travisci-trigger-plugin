@@ -1,4 +1,4 @@
 language: java
 
 script:
-- TERM=dumb ./gradlew -clean check -i --stacktrace
+- TERM=dumb ./gradlew clean check -i --stacktrace
