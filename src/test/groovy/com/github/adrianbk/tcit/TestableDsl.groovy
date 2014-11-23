@@ -51,12 +51,12 @@ tciTrigger{
       gitHubApiKeyVarName "${gitHubApiKeyVarName}"
       gitHubRepo 'adrianbk/travisci-downstream'
       travisVariable {
-        name = "GRADLE_HOME"
+        name = "T_GRADLE_HOME"
         value = '/opt/gradle2'
         visible = true
       }
       travisVariable {
-        name = "JAVA_HOME"
+        name = "T_JAVA_HOME"
         value = '/opt/java2'
         visible = true
       }

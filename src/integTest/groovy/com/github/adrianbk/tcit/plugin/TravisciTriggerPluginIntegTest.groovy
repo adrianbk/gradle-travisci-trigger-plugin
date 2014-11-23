@@ -1,7 +1,7 @@
 package com.github.adrianbk.tcit.plugin
 
-import com.github.adrianbk.tcit.TestableDsl
 import com.github.adrianbk.tcit.GradleIntegTest
+import com.github.adrianbk.tcit.TestableDsl
 import spock.lang.IgnoreIf
 import spock.lang.Specification
 

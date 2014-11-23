@@ -16,5 +16,6 @@ class TravisciTrigger {
     String token = travisApi.fetchApiToken(apiKey)
     String repositoryId = travisApi.findRepositoryId(travisciTriggerExtension.gitHubRepo, token)
     travisApi.saveOrUpdate(travisciTriggerExtension.getTravisEnvVars(), repositoryId, token)
+    travisApi.restartLastBuild(repositoryId, token)
   }
 }

@@ -25,6 +25,7 @@ class TravisciTriggerTest extends Specification {
       1 * travisApi.fetchApiToken(GIT_KEY) >> TRAVIS_TOKEN
       1 * travisApi.findRepositoryId(GIT_HUB_REPO_SLUG, TRAVIS_TOKEN) >> REPO_ID
       1 * travisApi.saveOrUpdate(travisciTriggerExtension.travisEnvVars, REPO_ID, TRAVIS_TOKEN)
+      1 * travisApi.restartLastBuild(REPO_ID, TRAVIS_TOKEN)
   }
 
 

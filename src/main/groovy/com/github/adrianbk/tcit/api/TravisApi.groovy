@@ -26,6 +26,15 @@ class TravisApi {
     client
   }
 
+  def httpHeaders = {
+    [
+            "Content-Type": "application/json",
+            "User-Agent"  : "${userAgent}",
+            "Host"        : "api.travis-ci.org",
+            "Accept"      : "application/vnd.travis-ci.2+json"
+    ]
+  }
+
   String fetchApiToken(String gitHubApiKey) {
     assert gitHubApiKey?.trim(): "gitHubApiKey must not be null or empty"
     def travisClient = restClient()
@@ -119,15 +128,6 @@ class TravisApi {
     data
   }
 
-  def httpHeaders = {
-    [
-            "Content-Type": "application/json",
-            "User-Agent"  : "${userAgent}",
-            "Host"        : "api.travis-ci.org",
-            "Accept"      : "application/vnd.travis-ci.2+json"
-    ]
-  }
-
   String findRepositoryId(String githubRepo, String token) {
     def travisClient = restClient()
     def response = travisClient.get(
@@ -139,5 +139,45 @@ class TravisApi {
     log.info("Found repository id:[$repoId]")
     repoId
   }
-//  DELETE /repos/settings/env_vars/{env_var.id}
+
+  def restartLastBuild(String repoId, String token) {
+    def travisClient = restClient()
+    def buildData = fetchBuilds(repoId, token)
+    if (buildData?.builds) {
+      def builds = buildData.builds
+      log.info("Found ${builds.size()} existing builds")
+      log.info("Found ${builds[0]} existing builds")
+      def buildId = builds[0].id
+      log.info("Restarting buildId:[${buildId}]")
+      def response = travisClient.post(
+              contentType: 'application/json',
+              path: "builds/${buildId}/restart",
+              headers: httpHeaders() + ["Authorization": "token ${token}"]
+      )
+      return response.data
+    } else {
+      throw new IllegalStateException("Could not trigger a build - there must be at least one existing travisci build")
+    }
+  }
+
+  def fetchBuilds = { String repoId, String token ->
+    def travisClient = restClient()
+    def response = travisClient.get(
+            path: '/builds',
+            query: [repository_id: repoId],
+            headers: httpHeaders() + ["Authorization": "token ${token}"],
+    )
+    def data = response.data
+    log.info("Data:${data}")
+    data
+  }
+
+  def deleteEnvVar = { String envVarId, String token ->
+    def travisClient = restClient()
+    def response = travisClient.get(
+            path: "settings/env_vars/$envVarId",
+            headers: httpHeaders() + ["Authorization": "token ${token}"],
+    )
+    response.data
+  }
 }
