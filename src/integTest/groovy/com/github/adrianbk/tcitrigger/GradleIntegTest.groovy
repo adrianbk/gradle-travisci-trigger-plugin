@@ -1,4 +1,4 @@
-package com.github.adrianbk.tcit
+package com.github.adrianbk.tcitrigger
 
 import org.gradle.api.GradleException
 import org.gradle.tooling.BuildLauncher

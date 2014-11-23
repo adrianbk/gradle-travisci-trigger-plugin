@@ -1,6 +1,6 @@
-package com.github.adrianbk.tcit.plugin
+package com.github.adrianbk.tcitrigger.plugin
 
-import com.github.adrianbk.tcit.TestableDsl
+import com.github.adrianbk.tcitrigger.TestableDsl
 import org.gradle.api.internal.project.DefaultProject
 import org.gradle.testfixtures.ProjectBuilder
 import spock.lang.Specification

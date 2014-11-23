@@ -1,6 +1,6 @@
-package com.github.adrianbk.tcit.plugin
+package com.github.adrianbk.tcitrigger.plugin
 
-import com.github.adrianbk.tcit.task.TravisciTriggerTask
+import com.github.adrianbk.tcitrigger.task.TravisciTriggerTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

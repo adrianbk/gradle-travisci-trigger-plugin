@@ -1,10 +1,33 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'nu.studer:gradle-plugindev-plugin:1.0.3'
+  }
+}
+
 apply plugin: 'groovy'
 apply plugin: "jacoco"
 apply plugin: 'project-report'
+apply plugin: 'nu.studer.plugindev'
+
+ext {
+  relUsername = project.hasProperty('bintray_username') ? project.getProperty('bintray_username') : 'admin'
+  relPassword = project.hasProperty('bintray_password') ? project.getProperty('bintray_password') : 'password'
+}
 
 repositories {
   jcenter()
 }
+
+
+
+group = 'com.github.adrianbk.tcit'
+version = '0.0.1.DEV'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.6
 
 sourceSets {
   integrationTest {
@@ -38,3 +61,22 @@ task integrationTest(type: Test) {
 
 check.dependsOn integrationTest
 check.dependsOn jacocoTestReport
+
+plugindev {
+  pluginImplementationClass "com.github.adrianbk.tcitrigger.plugin.TravisciTriggerPlugin"
+  pluginDescription 'A Gradle plugin to trigger (parameterized) Travic CI buids in other GitHub repositories'
+  pluginLicenses 'Apache-2.0'
+  pluginTags 'gradle', 'plugin', 'travisci', 'environment variables'
+  authorId 'adrianbk'
+  authorName 'Adrian Kelly'
+  authorEmail 'adrianbkelly+gplugin@gmail.com'
+  projectUrl 'https://github.com/adrianbk/gradle-travisci-trigger-plugin'
+  projectInceptionYear '2014'
+  done()
+}
+
+bintray {
+  user = "$relUsername"
+  key = "$relPassword"
+  pkg.repo = 'gradle-plugins'
+}

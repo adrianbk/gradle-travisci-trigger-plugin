@@ -1,4 +1,4 @@
-package com.github.adrianbk.tcit.plugin
+package com.github.adrianbk.tcitrigger.plugin
 
 import spock.lang.Specification
 import spock.lang.Unroll

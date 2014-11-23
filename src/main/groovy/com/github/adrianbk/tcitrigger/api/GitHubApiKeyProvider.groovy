@@ -1,6 +1,6 @@
-package com.github.adrianbk.tcit.api
+package com.github.adrianbk.tcitrigger.api
 
-import com.github.adrianbk.tcit.plugin.TravisciTriggerExtension
+import com.github.adrianbk.tcitrigger.plugin.TravisciTriggerExtension
 
 class GitHubApiKeyProvider {
 

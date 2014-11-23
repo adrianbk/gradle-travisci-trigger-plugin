@@ -1,6 +1,6 @@
-package com.github.adrianbk.tcit
+package com.github.adrianbk.tcitrigger
 
-import com.github.adrianbk.tcit.plugin.TravisciTriggerPlugin
+import com.github.adrianbk.tcitrigger.plugin.TravisciTriggerPlugin
 
 trait TestableDsl {
   Closure dslWithEnvVars() {

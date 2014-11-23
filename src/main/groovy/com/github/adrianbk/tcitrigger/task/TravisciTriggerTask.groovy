@@ -1,9 +1,9 @@
-package com.github.adrianbk.tcit.task
+package com.github.adrianbk.tcitrigger.task
 
-import com.github.adrianbk.tcit.api.GitHubApiKeyProvider
-import com.github.adrianbk.tcit.api.TravisApi
-import com.github.adrianbk.tcit.api.TravisciTrigger
-import com.github.adrianbk.tcit.plugin.TravisciTriggerExtension
+import com.github.adrianbk.tcitrigger.api.GitHubApiKeyProvider
+import com.github.adrianbk.tcitrigger.api.TravisApi
+import com.github.adrianbk.tcitrigger.api.TravisciTrigger
+import com.github.adrianbk.tcitrigger.plugin.TravisciTriggerExtension
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 

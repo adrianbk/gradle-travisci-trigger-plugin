@@ -1,4 +1,4 @@
-package com.github.adrianbk.tcit.plugin
+package com.github.adrianbk.tcitrigger.plugin
 
 import org.gradle.api.Project
 import spock.lang.Specification

@@ -1,6 +1,6 @@
-package com.github.adrianbk.tcit.api
+package com.github.adrianbk.tcitrigger.api
 
-import com.github.adrianbk.tcit.plugin.EnvVar
+import com.github.adrianbk.tcitrigger.plugin.EnvVar
 import groovy.json.JsonBuilder
 import groovy.util.logging.Slf4j
 import groovyx.net.http.RESTClient
