@@ -26,7 +26,7 @@ trait TestableDsl {
     """
 buildscript {
     repositories{
-      mavenLocal()
+     jcenter()
     }
     dependencies {
         //Required for testing
@@ -39,7 +39,7 @@ buildscript {
 }
 apply plugin: 'java'
 repositories {
-    mavenLocal()
+   jcenter()
 }
 """
   }
