@@ -64,7 +64,7 @@ check.dependsOn jacocoTestReport
 
 plugindev {
   pluginImplementationClass "com.github.adrianbk.tcitrigger.plugin.TravisciTriggerPlugin"
-  pluginDescription 'A Gradle plugin to trigger (parameterized) Travic CI buids in other GitHub repositories'
+  pluginDescription 'A Gradle plugin to trigger parametrized Travis CI builds belonging to another GitHub repo.'
   pluginLicenses 'Apache-2.0'
   pluginTags 'gradle', 'plugin', 'travisci', 'environment variables'
   authorId 'adrianbk'
