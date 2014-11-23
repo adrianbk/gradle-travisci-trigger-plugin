@@ -23,7 +23,7 @@ repositories {
 
 
 
-group = 'com.github.adrianbk.tcit'
+group = 'com.github.adrianbk.tcitrigger'
 version = '0.0.1.DEV'
 
 sourceCompatibility = 1.7

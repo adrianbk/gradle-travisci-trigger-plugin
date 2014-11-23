@@ -124,7 +124,7 @@ class TravisApi {
             headers: httpHeaders() + ["Authorization": "token ${token}"],
     )
     def data = response.data
-    log.info("Existing environment variables: $data")
+    log.debug("Existing environment variables: $data")
     data
   }
 
@@ -146,7 +146,7 @@ class TravisApi {
     if (buildData?.builds) {
       def builds = buildData.builds
       log.info("Found ${builds.size()} existing builds")
-      log.info("Found ${builds[0]} existing builds")
+      log.debug("Found ${builds[0]} existing builds")
       def buildId = builds[0].id
       log.info("Restarting buildId:[${buildId}]")
       def response = travisClient.post(
