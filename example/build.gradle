@@ -1,7 +1,6 @@
 buildscript {
   repositories {
     jcenter()
-    mavenLocal() //Remove when published
   }
   dependencies {
     classpath "com.github.adrianbk:gradle-travisci-trigger-plugin:1.0.0"
