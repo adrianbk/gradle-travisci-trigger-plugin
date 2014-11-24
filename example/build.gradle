@@ -1,0 +1,26 @@
+buildscript {
+  repositories {
+    jcenter()
+    mavenLocal() //Remove when published
+  }
+  dependencies {
+    classpath "com.github.adrianbk:gradle-travisci-trigger-plugin:1.0.0"
+  }
+}
+apply plugin: "com.github.adrianbk.tcitrigger"
+
+tciTrigger {
+  baseUri 'https://api.travis-ci.org/'            //Not required defaults to https://api.travis-ci.org/
+  gitHubApiKeyVarName "TRIGGER_GIT_HUB_API_KEY"   //Not required defaults to TRIGGER_GIT_HUB_API_KEY
+  gitHubRepo 'adrianbk/travisci-downstream'
+  travisVariable {
+    name = "MY_VAR"
+    value = "my_vars_value"
+    visible = true                                //Not required - defaults to true
+  }
+  travisVariable {
+    name = "MY_VAR_2"
+    value = "my_vars_value_2"
+    visible = true                                //Not required - defaults to true
+  }
+}

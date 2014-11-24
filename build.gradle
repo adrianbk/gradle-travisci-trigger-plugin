@@ -21,8 +21,6 @@ repositories {
   jcenter()
 }
 
-
-
 group = 'com.github.adrianbk'
 version = '1.0.0'
 
@@ -41,7 +39,10 @@ sourceSets {
 dependencies {
   compile localGroovy()
   compile gradleApi()
-  compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1@jar'
+
+  compile('org.codehaus.groovy.modules.http-builder:http-builder:0.7.2') {
+    exclude(module: 'groovy')
+  }
 
   testCompile("org.spockframework:spock-core:0.7-groovy-2.0") {
     exclude module: 'groovy-all'

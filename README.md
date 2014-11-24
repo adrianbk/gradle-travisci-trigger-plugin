@@ -19,6 +19,27 @@ travis encrypt TRIGGER_GIT_HUB_API_KEY=<git-hub-api-key> --add
 ## Gradle Usage
 
 ```groovy
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath "com.github.adrianbk:gradle-travisci-trigger-plugin:1.0.0"
+  }
+}
+apply plugin: "com.github.adrianbk.tcitrigger"
+
+tciTrigger {
+  gitHubRepo "adrianbk/travisci-downstream"
+  travisVariable {
+    name = "MY_VAR"
+    value = "my_vars_value"
+  }
+  travisVariable {
+    name = "MY_VAR_2"
+    value = "my_vars_value_2"
+  }
+}
 
 ```
 
@@ -39,6 +60,7 @@ tciTrigger {
 
 ## Tasks
 This plugin adds a single task 'travisciTrigger'
+
 ```bash
 ./gradlew travisciTrigger -i
 
