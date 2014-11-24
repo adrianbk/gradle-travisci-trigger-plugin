@@ -3,7 +3,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'nu.studer:gradle-plugindev-plugin:1.0.3'
+      classpath 'nu.studer:gradle-plugindev-plugin:1.0.3'
   }
 }
 
@@ -24,7 +24,7 @@ repositories {
 
 
 group = 'com.github.adrianbk.tcitrigger'
-version = '0.0.1.DEV'
+version = '1.0.0'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.6
@@ -78,5 +78,5 @@ plugindev {
 bintray {
   user = "$relUsername"
   key = "$relPassword"
-  pkg.repo = 'gradle-plugins'
+  pkg.repo = 'maven'
 }
