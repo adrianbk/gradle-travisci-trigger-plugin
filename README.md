@@ -3,19 +3,19 @@ gradle-travisci-trigger-plugin
 
 [![Build Status](https://travis-ci.org/adrianbk/gradle-travisci-trigger-plugin.svg?branch=master)](https://travis-ci.org/adrianbk/gradle-travisci-trigger-plugin.svg)
 
-A Gradle plugin to trigger parametrized Travis CI builds belonging to another GitHub repo.
+A Gradle plugin to trigger parametrized Travis CI builds belonging to other GitHub repositories.
 
 ## Overview
-This plugin uses the [Travis CI API](http://docs.travis-ci.com/api/) to optionally set environment variables on a 'downstream'
-build before re-building it's last known build, with those variables. Consider a parent - child relationship between two GitHub
-repositories, each with it's own Travis CI build. When the parent build is executed it may publish a new versioned artefact.
-It may be desirable to execute the child's build using the latest version of the parents published artefact.
-This plugin can be used to set the latest parent artefact version as an environment variable on the child build and then trigger
-a re-buid of the child's last know build. If the child build is configured to use an environment variable to determine
-the parent's artefact version, the end result is that the child build is executed with the latest version of the parents artefact.
+This plugin uses the [Travis CI API](http://docs.travis-ci.com/api/) to optionally set environment variables on, and trigger a
+build of, another 'downstream' TravisCI build.
+
+Consider two GitHub projects: 'upstream' and 'downstream', each with it's own Travis CI build. The 'downstream' build depends on
+a versioned software artefact produced by 'upstream'. On a successful build of 'upstream', it may be desirable to execute
+'downstream' using the latest version of upstream's published artefact. This plugin can be used to set upstreams latest version
+number as an environment variable on downstream before re-building downstreams last know build.
 
 ## Prerequisites
-In order for the plugin to use the Travis CI API, the 'parent' Travis CI build needs a GitHub access token.
+In order for the plugin to use the Travis CI API, the 'upstream' Travis CI build needs a GitHub access token.
 See [here](http://docs.travis-ci.com/api/#creating-a-temporary-github-token) for details on how that Token is used by the
 Travis CI API. A personal access token can be created using the
 GitHub UI: [Personal settings >> Applications](https://github.com/settings/tokens/new).
@@ -26,6 +26,8 @@ the [Travis CI command line client](http://blog.travis-ci.com/2013-01-14-new-cli
 ```bash
 travis encrypt TRIGGER_GIT_HUB_API_KEY=<git-hub-api-key> --add
 ```
+
+There must be at least one executed build on the downstream/target Travis CI build.
 
 ## Gradle Plugin Usage
 
