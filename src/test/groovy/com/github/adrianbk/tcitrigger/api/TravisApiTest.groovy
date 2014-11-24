@@ -1,52 +1,86 @@
 package com.github.adrianbk.tcitrigger.api
 
-import com.github.adrianbk.tcitrigger.plugin.EnvVar
+import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
+import groovyx.net.http.RESTClient
 import spock.lang.Specification
 
 class TravisApiTest extends Specification {
-  final TravisApi travisApi = new TravisApi('', '')
 
-  def "should find an update candidate when names match and value differ"() {
+  public static final String GITHUB_API_KEY = "github_api_key"
+  public static final String TRAVIS_ACCESS_TOKEN = 'travis_access_token'
+  public static final String GITHUB_REPO = 'my/git-repo'
+  public static final String GITHUB_REPO_ID = 'repo_id'
+
+  final TravisApi api = new TravisApi('userAgent', '')
+
+  def "Should fetch a github api token"() {
     given:
-      def existing = singleTravisVar('TEST_VAR', 'VAL')
-      def update = envVar('TEST_VAR', 'VAL2')
+      RESTClient restClient = Mock {
+        1 * post(
+                [
+                        contentType: 'application/json',
+                        path       : "auth/github",
+                        headers    : api.httpHeaders(),
+                        body       : githubApiTokenRequestJson()
+
+                ]
+        ) >> [status: 200, data: [access_token: TRAVIS_ACCESS_TOKEN]]
+      }
+
+      api.restClient = restClient
     expect:
-      def candidates = travisApi.findUpdateCandidateVars(existing, [update])
-      candidates[(update)]
+      api.fetchApiToken(GITHUB_API_KEY) == TRAVIS_ACCESS_TOKEN
   }
 
-  def "should return empty when no candidates"() {
-    expect:
-      [:] == travisApi.findUpdateCandidateVars([:], [envVar('n', 'v')])
-  }
-
-  def "should find an update candidate when 2 existing travis variables"() {
+  def "should find repo id"() {
     given:
-      def existing = twoEnvVars()
-      def update = envVar('name2', 'anyval')
+      RESTClient restClient = Mock {
+        1 * get(
+                [
+                        path   : "repos/${GITHUB_REPO}",
+                        headers: headersWithAuth(),
+
+                ]
+        ) >> [status: 200, data: [repo: [id: GITHUB_REPO_ID]]]
+      }
+      api.restClient = restClient
     expect:
-      def candidates = travisApi.findUpdateCandidateVars(existing, [update])
-      candidates[(update)]
-      candidates[(update)][0].id == 'id2'
-
+      api.findRepositoryId(GITHUB_REPO, TRAVIS_ACCESS_TOKEN) == GITHUB_REPO_ID
   }
 
-  def singleTravisVar(String name, String val) {
-    [env_vars: [[id: 'tid', name: "$name", 'public': true, repository_id: 'rid', value: "$val"]]]
+  def "should get existing environment variables"() {
+    given:
+      RESTClient restClient = Mock {
+        1 * get(
+                [
+                        path   : "/settings/env_vars",
+                        query  : [repository_id: GITHUB_REPO],
+                        headers: headersWithAuth(),
+
+                ]
+        ) >> [status: 200, data: [travisEnvironmentVariable()]]
+      }
+      api.restClient = restClient
+    expect:
+      api.getEnvVars(GITHUB_REPO, TRAVIS_ACCESS_TOKEN)[0].id == 'id'
   }
 
-  def twoEnvVars() {
-    [env_vars:
-             [
-                     [id: 'id1', name: 'name1', 'public': true, repository_id: 3431009, value: 'val1'],
-                     [id: 'id2', name: 'name2', 'public': false, repository_id: 3431009, value: 'val2']
-             ]
-    ]
+
+  private Map<String, String> headersWithAuth() {
+    api.httpHeaders() + ["Authorization": "token ${TRAVIS_ACCESS_TOKEN}"]
   }
 
-  def envVar(String name, String val) {
-    EnvVar var = new EnvVar(name)
-    var.value = val
-    var
+  def travisEnvironmentVariable() {
+    String jsonStr = '''{"id":"id","name":"vanme","value":"vvalue","public":true,"repository_id":123}'''
+    new JsonSlurper().parseText(jsonStr)
+  }
+
+  private String githubApiTokenRequestJson() {
+    JsonBuilder jb = new JsonBuilder()
+    jb {
+      github_token "$GITHUB_API_KEY"
+    }
+    jb.toString()
   }
 }

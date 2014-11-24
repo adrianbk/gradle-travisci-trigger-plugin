@@ -7,6 +7,7 @@ import groovyx.net.http.RESTClient
 
 @Slf4j
 class TravisApi {
+  public static final String CONTENT_TYPE = 'application/json'
   private final String baseUri
   private String userAgent
   RESTClient restClient
@@ -44,7 +45,7 @@ class TravisApi {
     }
 
     def accessTokenResp = travisClient.post(
-            contentType: 'application/json',
+            contentType: CONTENT_TYPE,
             path: 'auth/github',
             headers: httpHeaders(),
             body: tokBuilder.toString()
@@ -75,7 +76,7 @@ class TravisApi {
   def createEnvironmentVariable = { EnvVar envVar, String repoId, String token ->
     def travisClient = restClient()
     def envResp = travisClient.post(
-            contentType: 'application/json',
+            contentType: CONTENT_TYPE,
             path: 'settings/env_vars',
             query: [repository_id: repoId],
             headers: httpHeaders() + ["Authorization": "token ${token}"],
@@ -89,7 +90,7 @@ class TravisApi {
   def updateEnvironmentVariable = { EnvVar envVar, String travisVarId, String repoId, String token ->
     def travisClient = restClient()
     def envResp = travisClient.patch(
-            contentType: 'application/json',
+            contentType: CONTENT_TYPE,
             path: "settings/env_vars/$travisVarId",
             query: [repository_id: repoId],
             headers: httpHeaders() + ["Authorization": "token ${token}"],
@@ -150,7 +151,7 @@ class TravisApi {
       def buildId = builds[0].id
       log.info("Restarting buildId:[${buildId}]")
       def response = travisClient.post(
-              contentType: 'application/json',
+              contentType: CONTENT_TYPE,
               path: "builds/${buildId}/restart",
               headers: httpHeaders() + ["Authorization": "token ${token}"]
       )

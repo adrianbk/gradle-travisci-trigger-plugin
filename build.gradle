@@ -3,7 +3,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-      classpath 'nu.studer:gradle-plugindev-plugin:1.0.3'
+    classpath 'nu.studer:gradle-plugindev-plugin:1.0.3'
   }
 }
 
@@ -57,7 +57,10 @@ task integrationTest(type: Test) {
   classpath = sourceSets.integrationTest.runtimeClasspath
   reports.getHtml().destination = file("$test.reports.html.destination/integTest")
   reports.getJunitXml().destination = file("$test.reports.junitXml.destination/integTest")
-  mustRunAfter test
+}
+
+jacoco {
+  toolVersion = "0.7.2.201409121644"
 }
 
 check.dependsOn integrationTest
