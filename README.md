@@ -69,12 +69,12 @@ tciTrigger {
   travisVariable {
     name = "MY_VAR"
     value = "my_vars_value"
-    visible = true                                //Not required - defaults to true
+    visible = true                                //Not required - defaults to false(secure)
   }
   travisVariable {
     name = "MY_VAR_2"
     value = "my_vars_value_2"
-    visible = true                                //Not required - defaults to true
+    visible = true                                //Not required - defaults to false(secure)
   }
 }
 ```
@@ -86,7 +86,7 @@ This plugin adds a single task 'travisciTrigger'
 ./gradlew travisciTrigger -i
 
 ```
-The task will add or update, as appropriate, any configured `travisVariable's` on the target build before executing that target build.
+- The task will add or update, as appropriate, any configured `travisVariable's` on the target build before executing that target build.
 
 ### License
 [Apache-2.0] (http://www.apache.org/licenses/LICENSE-2.0.html)

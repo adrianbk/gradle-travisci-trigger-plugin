@@ -15,11 +15,11 @@ tciTrigger {
   travisVariable {
     name = "MY_VAR"
     value = "my_vars_value"
-    visible = true                                //Not required - defaults to true
+    visible = true                                //Not required - defaults to false
   }
   travisVariable {
     name = "MY_VAR_2"
     value = "my_vars_value_2"
-    visible = true                                //Not required - defaults to true
+    visible = true                                //Not required - defaults to false
   }
 }
