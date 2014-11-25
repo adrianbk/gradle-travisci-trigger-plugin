@@ -43,8 +43,9 @@ buildscript {
 apply plugin: "com.github.adrianbk.tcitrigger"
 ```
 
-## Gradle Configuration
+## Minimum Gradle Configuration
 ```groovy
+
 tciTrigger {
   gitHubRepo '<your_github_id>/<github_repo_name>' //Downstream repository
   travisVariable {
@@ -54,6 +55,26 @@ tciTrigger {
   travisVariable {
     name = "SAMPELE_VARIABLE_2"
     value = 'SAMPLE_VALUE_2'
+  }
+}
+```
+
+## Optional configuration
+```groovy
+
+tciTrigger {
+  baseUri 'https://api.travis-ci.org/'            //Not required defaults to https://api.travis-ci.org/
+  gitHubApiKeyVarName "OTHER_GIT_HUB_API_KEY"     //Not required defaults to TRIGGER_GIT_HUB_API_KEY
+  gitHubRepo '<your_github_id>/<github_repo_name>'
+  travisVariable {
+    name = "MY_VAR"
+    value = "my_vars_value"
+    visible = true                                //Not required - defaults to true
+  }
+  travisVariable {
+    name = "MY_VAR_2"
+    value = "my_vars_value_2"
+    visible = true                                //Not required - defaults to true
   }
 }
 ```
